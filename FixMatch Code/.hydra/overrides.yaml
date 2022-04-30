@@ -1,0 +1,17 @@
+- DATASET.label_num=4000
+- DATASET.strongaugment=RA
+- EXPERIMENT.epoch_n=120
+- EXPERIMENT.batch_size=32
+- MODEL.num_classes=10
+- EXPERIMENT.out_model=./checkpoints/checkpoints_celiali_resnext50_1_cadinality12/
+- EXPERIMENT.log_path=./outputs/outputs_resnext50_1_cadinality12/
+- EXPERIMENT.save_cfmatrix=False
+- EXPERIMENT.decay_type=cosine
+- DATASET.cut_type=cutout
+- MODEL.name=CifarResNeXt
+- MODEL.cardinality=12
+- MODEL.depth=50
+- MODEL.width=1
+- MODEL.widen_factor=1
+- EXPERIMENT.resume=True
+- EXPERIMENT.resume_checkpoints=./checkpoints/checkpoints_celiali_resnext50_1_cadinality12/FMExperiment.pth.tar

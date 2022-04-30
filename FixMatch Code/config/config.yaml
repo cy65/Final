@@ -1,0 +1,72 @@
+DATASET:
+  project_dir: './'
+  data_dir: 'data'
+  loading_data: 'LOAD_LABEL_UNLABEL' # ----LOAD_ORIGINAL'--- 'LOAD_LABEL_UNLABEL' ---
+  dataset: 'CIFAR10'
+  strongaugment: 'RA'
+  cut_type: 'gridmask' #"cutout" and "gridmask" ---
+  label_num: 4000
+  num_expand_x: 65536 # total number of labeled samples this is 7*2^13 unlabeled and 2*13 labeled
+  mu: 7
+  barely: False
+  add_noisy_label: False
+  both_strong: False # if apply two strong augmentations
+
+MODEL:
+  name: 'WideResNet_Lk'             #---- 'WideResNet'---'WideResNet_Lk'----'CifarResNeXt'------#
+  depth: 28
+  widen_factor: 4
+  num_classes: 10
+  dropout: 0.0
+  cardinality: 4
+  width: 4
+  base_width: 4
+
+EXPERIMENT:
+  name: 'FMExperiment'              #---- 'VANILLA'--- 'FMExperiment' ---
+  out_model: './checkpoints/'
+  log_path: './outputs/'
+  used_gpu: True
+  decay_type: 'cosine' # 'abel'
+  abel_decay: 0.1
+  optim_lr: 0.03
+  optim_momentum: 0.9
+  used_nesterov: True
+  warmup: 0
+  wdecay: 0.0005
+  clip: 1
+
+  ema_used: True
+  ema_decay: 0.999
+
+  threshold: 0.95
+  lambda_unlabeled: 1
+
+  batch_size: 64
+  num_workers: 4
+  n_imgs_per_epoch: 65536
+  epoch_n: 120
+  save_every: 2
+  save_matrix_every: 20 # batch
+
+  resume: False
+  resume_checkpoints: './checkpoints/exp_4000_1/FMExperiment_epoch_179.pth.tar'
+
+  save_cfmatrix: True
+  batch_balanced: False  #--- innovated batch balance for confirmation error ----
+
+  neg_penalty: False     #--- innovated negative entropy penalty ---
+  equal_freq: False      # --- innovated equal frequency ---
+  eta_negpenalty: 0.05
+  eta_dynamic: False
+
+  use_nlloss: False      # --- innovated noisy label loss --- 
+  q: 0.0001  # hyperparameter for noisy label loss
+
+Logging:
+  name: "FM"
+  seed: 1265                    #---- None ---
+
+hydra:
+  run:
+    dir: ./
